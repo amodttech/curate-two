@@ -1,0 +1,28 @@
+* {
+  background-color: darkgrey;
+  color: black;
+  /* border: 1px solid rgba(94, 85, 85, 0.2); */
+}
+
+.object-display {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+}
+
+.object-card {
+  margin: 4%;
+  border: dotted black 1px;
+  max-width: 30%;
+  max-height: 20%;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.object-card img {
+  max-width: 100%;
+}

@@ -12,14 +12,23 @@ function App() {
 
   async function getResults(e) {
     e.preventDefault();
+    // turns on the searching indicator
     setSearching(true);
+
     try {
+      //first API call, returns json with total number of objects and array of object IDs
       const apiResponse = await fetch(
         `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${searchTerm}`
       );
       const returnedIDs = await apiResponse.json();
+
+      // destructure the object IDs from the response
       const { objectIDs } = returnedIDs;
+
+      // destructure the total number value to useState
       setNumberOfResults(returnedIDs.total.toString());
+
+      // map objects to an array
       const artObjectArray = await Promise.all(
         objectIDs.map(async (id) => {
           const response = await fetch(
@@ -28,9 +37,14 @@ function App() {
           return await response.json();
         })
       );
+      // turns off the searching indicator
       setSearching(false);
+
+      // sets the array of objects to display
       setFoundObjects(artObjectArray.slice(0, 49));
+
     } catch {
+      // turns off the searching indicator
       setSearching(false);
       console.log("bad response :/");
     }

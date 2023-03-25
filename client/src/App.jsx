@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ResultDisplay from "./components/ResultDisplay";
 import SearchBar from "./components/SearchBar";
+import ScrollButton from "./components/ScrollButton";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -62,6 +63,7 @@ function App() {
       <p>{numberOfResults ? `Results: ${numberOfResults}` : null}</p>
       <p>{searching ? "searching" : null}</p>
       <ResultDisplay foundObjects={foundObjects} />
+      <ScrollButton />
     </div>
   );
 }

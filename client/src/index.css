@@ -4,6 +4,17 @@
   /* border: 1px solid rgba(94, 85, 85, 0.2); */
 }
 
+body {
+  background-color: darkgrey;
+  color: black;
+}
+@media screen and (prefers-color-scheme: light) {
+  body {
+    background-color: white;
+    color: black;
+  }
+}
+
 .object-display {
   margin-left: auto;
   margin-right: auto;
@@ -21,6 +32,7 @@
   flex-direction: row;
   margin-left: auto;
   margin-right: auto;
+  filter: drop-shadow(1px 3px 5px hsl(0, 0%, 53%));
 }
 
 .object-card img {

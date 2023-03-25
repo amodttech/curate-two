@@ -5,6 +5,7 @@ import SearchBar from "./components/SearchBar";
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [foundObjects, setFoundObjects] = useState([]);
+  const [numberOfResults, setNumberOfResults] = useState(null);
   const [searching, setSearching] = useState(false);
   const METurl =
     "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=";
@@ -18,6 +19,7 @@ function App() {
       );
       const returnedIDs = await apiResponse.json();
       const { objectIDs } = returnedIDs;
+      setNumberOfResults(returnedIDs.total.toString());
       const artObjectArray = await Promise.all(
         objectIDs.map(async (id) => {
           const response = await fetch(
@@ -27,7 +29,7 @@ function App() {
         })
       );
       setSearching(false);
-      setFoundObjects(artObjectArray.slice(0, 9));
+      setFoundObjects(artObjectArray.slice(0, 49));
     } catch {
       setSearching(false);
       console.log("bad response :/");
@@ -43,6 +45,7 @@ function App() {
         setSearchTerm={setSearchTerm}
         getResults={getResults}
       />
+      <p>{numberOfResults ? `Results: ${numberOfResults}` : null}</p>
       <p>{searching ? "searching" : null}</p>
       <ResultDisplay foundObjects={foundObjects} />
     </div>

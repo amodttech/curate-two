@@ -5,17 +5,24 @@
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
+@import "rsuite/dist/rsuite.css";
 
 body {
   background-color: darkgrey;
   color: black;
   font-family: "Source Serif Pro", serif;
 }
-@media screen and (prefers-color-scheme: light) {
+
+@media (prefers-color-scheme: light) {
   body {
-    background-color: white;
-    color: black;
+    filter: invert(100%);
+    background-color: rgb(29,32,31) !important;
   }
+  img, 
+    .emoji {
+      filter: invert(100%);
+    }
+  
 }
 
 h1 {
@@ -97,3 +104,4 @@ h6 {
   margin: 0%;
   text-align: left;
 }
+

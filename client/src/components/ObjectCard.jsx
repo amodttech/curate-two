@@ -1,4 +1,5 @@
 import React from "react";
+import { Popover, Whisper, Button } from "rsuite";
 
 function ObjectCard({ artObject, element }) {
   return (
@@ -15,7 +16,19 @@ function ObjectCard({ artObject, element }) {
       <h5 className="object-artist">{artObject.artistDisplayName}</h5>
       <h5 className="object-date">{artObject.objectDate}</h5>
 
-      <div className="object-id-container">ID: 
+      <Whisper
+        followCursor
+        speaker={
+          <Popover>
+              Department: {artObject.department}
+          </Popover>
+        }
+      >
+        <Button>More Details</Button>
+      </Whisper>
+
+      <div className="object-id-container">
+        ID:
         <a href={artObject.objectURL} target="_blank">
           {artObject.objectID}
         </a>

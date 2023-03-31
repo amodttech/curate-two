@@ -100,7 +100,7 @@ const testObject = [{
 }]
 
 function ResultDisplay({ foundObjects }) {
-  const objectList = testObject.map((artObject, index) => (
+  const objectList = foundObjects.map((artObject, index) => (
     <ObjectCard element={index} artObject={artObject}/>
   ));
   return <ul className="object-display">{objectList}</ul>;

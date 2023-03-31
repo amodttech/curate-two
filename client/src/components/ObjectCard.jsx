@@ -1,7 +1,9 @@
-import React from "react";
-import { Popover, Whisper, Button } from "rsuite";
+import React, { useState } from "react";
+import { Popover } from "react-tiny-popover";
 
 function ObjectCard({ artObject, element }) {
+
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   return (
     <li key={element} className="object-card">
       {artObject.primaryImageSmall ? (
@@ -16,16 +18,23 @@ function ObjectCard({ artObject, element }) {
       <h5 className="object-artist">{artObject.artistDisplayName}</h5>
       <h5 className="object-date">{artObject.objectDate}</h5>
 
-      <Whisper
-        followCursor
-        speaker={
-          <Popover>
-              Department: {artObject.department}
-          </Popover>
-        }
+      <Popover
+        isOpen={isPopoverOpen}
+        positions={["bottom", "left"]} // if you'd like, you can limit the positions
+        padding={5} // adjust padding here!
+        reposition={true} // prevents automatic readjustment of content position that keeps your popover content within its parent's bounds
+        onClickOutside={() => setIsPopoverOpen(false)} // handle click events outside of the popover/target here!
+        content={() => (
+          <div className="popover-container">
+            <h5 className="object-detail"><span style={{fontWeight: 'bold'}}>Medium: </span>{artObject.medium}</h5>
+            <h5 className="object-detail"><span style={{fontWeight: 'bold'}}>Dimensions: </span>{artObject.dimensions}</h5>
+            <h5 className="object-detail"><span style={{fontWeight: 'bold'}}>Department: </span>{artObject.department}</h5>
+            <h5 className="object-detail"><span style={{fontWeight: 'bold'}}>Artist Nationality: </span>{artObject.artistNationality}</h5>
+          </div>
+        )}
       >
-        <Button>More Details</Button>
-      </Whisper>
+        <div className="popover-button" onClick={() => setIsPopoverOpen(!isPopoverOpen)}>More details</div>
+      </Popover>
 
       <div className="object-id-container">
         ID:

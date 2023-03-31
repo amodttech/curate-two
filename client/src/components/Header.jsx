@@ -5,7 +5,7 @@ function Header() {
   return (
     <div className="header-container">
       <img className="museum-icon" src={museumIcon} alt="museum icon" />
-      <h5></h5>
+      <h1>CURATE 2.0</h1>
     </div>
   );
 }

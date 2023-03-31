@@ -53,6 +53,7 @@ h6 {
   height: 2rem;
   margin: 1rem;
   margin-left: 0;
+  display: flex;
 }
 
 .search-container {
@@ -63,15 +64,16 @@ h6 {
 }
 
 .search-input {
-
+  font-family: "Source Serif Pro", serif;
 }
 
 .search-button {
-
+  font-family: "Source Serif Pro", serif;
 }
 
 .museum-icon {
   height: 100%;
+  margin-right: 1rem;
 }
 
 .search-container input {
@@ -92,7 +94,6 @@ h6 {
 
 .object-card {
   margin: 4%;
-  /* padding: 1%; */
   padding: 1vmin;
   border: dotted black 1px;
   max-width: 20vw;
@@ -128,9 +129,32 @@ h6 {
   max-width: 100%;
   font-weight: 100;
 }
+.object-detail {
+  max-width: 100%;
+  font-weight: 100;
+}
 
 .object-id-container {
   font-size: 0.6rem;
   margin: 0%;
+  margin-top: 1rem;
   text-align: left;
+}
+
+.popover-button {
+  margin-block: 0.2rem;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.popover-button:hover {
+  cursor: pointer;
+}
+
+.popover-container {
+  border: dotted black 1px;
+  filter: drop-shadow(1px 3px 5px hsl(0, 0%, 53%));
+  padding: 0.2rem;
+  max-width: 20vw;
 }

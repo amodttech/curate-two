@@ -2,6 +2,7 @@ import { useState } from "react";
 import ResultDisplay from "./components/ResultDisplay";
 import SearchBar from "./components/SearchBar";
 import ScrollButton from "./components/ScrollButton";
+import Header from "./components/Header"
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -43,7 +44,6 @@ function App() {
 
       // sets the array of objects to display
       setFoundObjects(artObjectArray.slice(0, 49));
-
     } catch {
       // turns off the searching indicator
       setSearching(false);
@@ -55,6 +55,7 @@ function App() {
 
   return (
     <div className="App">
+      <Header />
       <SearchBar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}

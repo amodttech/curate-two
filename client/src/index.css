@@ -1,7 +1,7 @@
 * {
   background-color: darkgrey;
   color: black;
-  /* border: 1px solid rgba(94, 85, 85, 0.2); */
+  /* border: 1px solid red; */
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
@@ -16,13 +16,12 @@ body {
 @media (prefers-color-scheme: light) {
   body {
     filter: invert(100%);
-    background-color: rgb(29,32,31) !important;
+    background-color: rgb(29, 32, 31) !important;
   }
-  img, 
-    .emoji {
-      filter: invert(100%);
-    }
-  
+  img,
+  .emoji {
+    filter: invert(100%);
+  }
 }
 
 h1 {
@@ -48,6 +47,38 @@ h5 {
 h6 {
   font-size: 0.67rem;
   margin: 0%;
+}
+
+.header-container {
+  height: 2rem;
+  margin: 1rem;
+  margin-left: 0;
+}
+
+.search-container {
+  background: rgba(0, 0, 0, 0.2);
+  align-items: center;
+  display: flex;
+  width: 100%;
+}
+
+.search-input {
+
+}
+
+.search-button {
+
+}
+
+.museum-icon {
+  height: 100%;
+}
+
+.search-container input {
+  font-family: inherit;
+  width: 100%;
+  border: 2px solid grey;
+  border-bottom: 2px solid black;
 }
 
 .object-display {
@@ -98,10 +129,8 @@ h6 {
   font-weight: 100;
 }
 
-
 .object-id-container {
   font-size: 0.6rem;
   margin: 0%;
   text-align: left;
 }
-

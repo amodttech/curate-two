@@ -1,26 +1,15 @@
 * {
   background-color: darkgrey;
   color: black;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&family=Secular+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&family=Secular+One&display=swap");
 
 body {
   background-color: darkgrey;
   color: black;
-  font-family: 'Dosis', sans-serif;
-}
-
-@media (prefers-color-scheme: light) {
-  body {
-    filter: invert(100%);
-    background-color: rgb(29, 32, 31) !important;
-  }
-  img,
-  .emoji {
-    filter: invert(100%);
-  }
+  font-family: "Dosis", sans-serif;
 }
 
 h1 {
@@ -53,7 +42,7 @@ h6 {
   margin: 1rem;
   margin-left: 0;
   display: flex;
-  font-family: 'Secular One', sans-serif;
+  font-family: "Secular One", sans-serif;
 }
 
 .search-container {
@@ -96,8 +85,8 @@ h6 {
   margin-right: 1rem;
 }
 
-.result-number {
-
+.status-bar {
+  margin-block: 0.5rem;
 }
 
 .object-display {

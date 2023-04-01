@@ -3,12 +3,14 @@ import ResultDisplay from "./components/ResultDisplay";
 import SearchBar from "./components/SearchBar";
 import ScrollButton from "./components/ScrollButton";
 import Header from "./components/Header"
+import StatusBar from "./components/StatusBar";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [foundObjects, setFoundObjects] = useState([]);
   const [numberOfResults, setNumberOfResults] = useState(null);
   const [searching, setSearching] = useState(false);
+  const [searchStatus, setSearchStatus] = useState("Contacting the Museum...")
   const METurl =
     "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=";
 
@@ -23,11 +25,13 @@ function App() {
         `${METurl}${searchTerm}`
       );
       const returnedIDs = await apiResponse.json();
+      setSearchStatus("Receiving Results...")
 
       // destructure the object IDs from the response
       const { objectIDs } = returnedIDs;
 
       // destructure the total number value to useState
+      setSearchStatus("Building Response...")
       setNumberOfResults(returnedIDs.total.toString());
 
       // map objects to an array
@@ -40,12 +44,14 @@ function App() {
         })
       );
       // turns off the searching indicator
-      setSearching(false);
+      setSearchStatus("Rendering Display...")
 
       // sets the array of objects to display
       setFoundObjects(artObjectArray.slice(0, 49));
+      setSearching(false);
     } catch {
       // turns off the searching indicator
+      setSearchStatus("Something Has Gone Horribly Wrong!  HELP!")
       setSearching(false);
       console.log("bad response :/");
     }
@@ -61,8 +67,7 @@ function App() {
         setSearchTerm={setSearchTerm}
         getResults={getResults}
       />
-      <p>{numberOfResults ? `Results: ${numberOfResults}` : null}</p>
-      <p>{searching ? "searching" : null}</p>
+      <StatusBar searching={searching} numberOfResults={numberOfResults} searchStatus={searchStatus}/>
       <ResultDisplay foundObjects={foundObjects} />
       <ScrollButton />
     </div>

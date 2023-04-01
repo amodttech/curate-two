@@ -1,16 +1,15 @@
 * {
   background-color: darkgrey;
   color: black;
-  /* border: 1px solid red; */
+  border: 1px solid red;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
-@import "rsuite/dist/rsuite.css";
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&family=Secular+One&display=swap');
 
 body {
   background-color: darkgrey;
   color: black;
-  font-family: "Source Serif Pro", serif;
+  font-family: 'Dosis', sans-serif;
 }
 
 @media (prefers-color-scheme: light) {
@@ -54,21 +53,42 @@ h6 {
   margin: 1rem;
   margin-left: 0;
   display: flex;
+  font-family: 'Secular One', sans-serif;
 }
 
 .search-container {
-  background: rgba(0, 0, 0, 0.2);
   align-items: center;
   display: flex;
   width: 100%;
 }
 
 .search-input {
-  font-family: "Source Serif Pro", serif;
+  width: 100%;
+  font-size: medium;
+  border-radius: 0;
+  border-top: 0.1rem solid white;
+  border-right: 0.1rem solid white;
+  border-bottom: 0.1rem solid black;
+  border-left: 0.1rem solid black;
+}
+
+.search-input:focus {
+  background-color: ivory;
+  color: black;
+  border-top: 0.1rem solid white;
+  border-right: 0.1rem solid white;
+  border-bottom: 0.1rem solid black;
+  border-left: 0.1rem solid black;
+  border-radius: 0;
 }
 
 .search-button {
-  font-family: "Source Serif Pro", serif;
+  font-size: medium;
+  margin-right: 0.4rem;
+  border-top: 0.1rem solid white;
+  border-right: 0.1rem solid white;
+  border-bottom: 0.1rem solid black;
+  border-left: 0.1rem solid black;
 }
 
 .museum-icon {
@@ -76,11 +96,8 @@ h6 {
   margin-right: 1rem;
 }
 
-.search-container input {
-  font-family: inherit;
-  width: 100%;
-  border: 2px solid grey;
-  border-bottom: 2px solid black;
+.result-number {
+
 }
 
 .object-display {

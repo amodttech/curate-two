@@ -20,7 +20,7 @@ function App() {
     try {
       //first API call, returns json with total number of objects and array of object IDs
       const apiResponse = await fetch(
-        `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${searchTerm}`
+        `${METurl}${searchTerm}`
       );
       const returnedIDs = await apiResponse.json();
 

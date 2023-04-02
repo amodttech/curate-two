@@ -5,7 +5,7 @@ function ObjectCard({ artObject, element }) {
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   return (
-    <li key={element} className="object-card">
+    <div key={element} className="object-card">
       {artObject.primaryImageSmall ? (
         <a href={artObject.primaryImage} target="_blank">
           <img src={artObject.primaryImageSmall} alt={artObject.title} />
@@ -42,7 +42,7 @@ function ObjectCard({ artObject, element }) {
           {artObject.objectID}
         </a>
       </div>
-    </li>
+    </div>
   );
 }
 

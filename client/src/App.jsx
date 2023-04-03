@@ -4,21 +4,19 @@ import SearchBar from "./components/SearchBar";
 import ScrollButton from "./components/ScrollButton";
 import Header from "./components/Header";
 import StatusBar from "./components/StatusBar";
-
+import Pagination from "./components/Pagination";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [foundObjects, setFoundObjects] = useState([]);
+  const [objectsToDisplay, setObjectsToDisplay] = useState([]);
   const [numberOfResults, setNumberOfResults] = useState(null);
   const [searching, setSearching] = useState(false);
   const [searchStatus, setSearchStatus] = useState("Contacting the Museum...");
 
-
-
   const METurl =
     "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=";
 
-  async function getResults(e) {
+  async function getAllResults(e) {
     e.preventDefault();
     // turns on the searching indicator
     setSearching(true);
@@ -49,7 +47,7 @@ function App() {
       setSearchStatus("Rendering Display...");
 
       // sets the array of objects to display
-      setFoundObjects(artObjectArray.slice(0, 49));
+      setObjectsToDisplay(artObjectArray.slice(0, 49));
       setSearching(false);
     } catch {
       // turns off the searching indicator
@@ -60,22 +58,21 @@ function App() {
   }
 
 
-  console.log("foundObjects", foundObjects);
-
   return (
     <div className="App">
       <Header />
       <SearchBar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
-        getResults={getResults}
+        getAllResults={getAllResults}
       />
       <StatusBar
         searching={searching}
         numberOfResults={numberOfResults}
         searchStatus={searchStatus}
       />
-      <ResultDisplay foundObjects={foundObjects} />
+      <Pagination />
+      <ResultDisplay objectsToDisplay={objectsToDisplay} />
       <ScrollButton />
     </div>
   );

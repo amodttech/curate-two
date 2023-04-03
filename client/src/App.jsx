@@ -1,11 +1,9 @@
 import { useState } from "react";
-import ReactPaginate from 'react-paginate'
 import ResultDisplay from "./components/ResultDisplay";
 import SearchBar from "./components/SearchBar";
 import ScrollButton from "./components/ScrollButton";
 import Header from "./components/Header";
 import StatusBar from "./components/StatusBar";
-import Pagination from "./components/Pagination";
 
 
 function App() {
@@ -15,16 +13,7 @@ function App() {
   const [searching, setSearching] = useState(false);
   const [searchStatus, setSearchStatus] = useState("Contacting the Museum...");
 
-  // For pagination:
-  const [displayObjects, setDisplayObjects] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [objectsPerPage, setObjectsPerPage] = useState(10);
-  const indexOfLastObject = currentPage * objectsPerPage;
-  const indexOfFirstObject = indexOfLastObject - objectsPerPage;
-  const currentDisplayObjects = displayObjects.slice(
-    indexOfFirstObject,
-    indexOfLastObject
-  );
+
 
   const METurl =
     "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=";
@@ -59,10 +48,6 @@ function App() {
       // turns off the searching indicator
       setSearchStatus("Rendering Display...");
 
-      /////  Sends all objects to pagination logic
-      setDisplayObjects(artObjectArray);
-      //////
-
       // sets the array of objects to display
       setFoundObjects(artObjectArray.slice(0, 49));
       setSearching(false);
@@ -74,21 +59,6 @@ function App() {
     }
   }
 
-  function previousPage() {
-    if (currentPage !== 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  }
-
-  function nextPage() {
-    if (currentPage !== Math.ceil(displayObjects.length / objectsPerPage)) {
-      setCurrentPage(currentPage + 1);
-    }
-  }
-
-  function paginate({selected}) {
-    setCurrentPage(selected + 1)
-  }
 
   console.log("foundObjects", foundObjects);
 
@@ -105,25 +75,7 @@ function App() {
         numberOfResults={numberOfResults}
         searchStatus={searchStatus}
       />
-      {/* <Pagination
-        objectsPerPage={objectsPerPage}
-        numberOfResults={numberOfResults}
-        previousPage={previousPage}
-        nextPage={nextPage}
-        paginate={paginate}
-      /> */}
-      <ReactPaginate
-                  onPageChange={paginate}
-                  pageCount={Math.ceil(displayObjects.length / objectsPerPage)}
-                  previousLabel={'Prev'}
-                  nextLabel={'Next'}
-                  containerClassName={'pagination'}
-                  pageLinkClassName={'page-number'}
-                  previousLinkClassName={'page-number'}
-                  nextLinkClassName={'page-number'}
-                  activeLinkClassName={'active'}
-               />
-      <ResultDisplay foundObjects={currentDisplayObjects} />
+      <ResultDisplay foundObjects={foundObjects} />
       <ScrollButton />
     </div>
   );

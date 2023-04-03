@@ -166,14 +166,12 @@ h6 {
 }
 .pagination {
   list-style: none;
-  margin-left: -0.5em;
-	margin-right: -0.5em;
-	padding-left: 0;
+
 }
 
 .page-number {
   cursor: pointer;
-  display: inline;
-	margin-left: 0.5em;
-	margin-right: 0.5em;
+  margin: 0.5rem;
+  padding: 0.25rem;
+  border: solid 1px black;
 }

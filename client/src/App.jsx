@@ -1,10 +1,12 @@
 import { useState } from "react";
+import ReactPaginate from 'react-paginate'
 import ResultDisplay from "./components/ResultDisplay";
 import SearchBar from "./components/SearchBar";
 import ScrollButton from "./components/ScrollButton";
 import Header from "./components/Header";
 import StatusBar from "./components/StatusBar";
 import Pagination from "./components/Pagination";
+
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -103,13 +105,24 @@ function App() {
         numberOfResults={numberOfResults}
         searchStatus={searchStatus}
       />
-      <Pagination
+      {/* <Pagination
         objectsPerPage={objectsPerPage}
         numberOfResults={numberOfResults}
         previousPage={previousPage}
         nextPage={nextPage}
         paginate={paginate}
-      />
+      /> */}
+      <ReactPaginate
+                  onPageChange={paginate}
+                  pageCount={Math.ceil(displayObjects.length / objectsPerPage)}
+                  previousLabel={'Prev'}
+                  nextLabel={'Next'}
+                  containerClassName={'pagination'}
+                  pageLinkClassName={'page-number'}
+                  previousLinkClassName={'page-number'}
+                  nextLinkClassName={'page-number'}
+                  activeLinkClassName={'active'}
+               />
       <ResultDisplay foundObjects={currentDisplayObjects} />
       <ScrollButton />
     </div>

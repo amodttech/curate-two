@@ -164,7 +164,16 @@ h6 {
   padding: 0.2rem;
   max-width: 20vw;
 }
+.pagination {
+  list-style: none;
+  margin-left: -0.5em;
+	margin-right: -0.5em;
+	padding-left: 0;
+}
 
 .page-number {
   cursor: pointer;
+  display: inline;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
 }

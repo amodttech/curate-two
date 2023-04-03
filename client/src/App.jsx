@@ -72,9 +72,21 @@ function App() {
     }
   }
 
-  function getFiftyObjects() {}
+  function previousPage() {
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  }
 
-  function nextPage() {}
+  function nextPage() {
+    if (currentPage !== Math.ceil(displayObjects.length / objectsPerPage)) {
+      setCurrentPage(currentPage + 1);
+    }
+  }
+
+  function paginate({selected}) {
+    setCurrentPage(selected + 1)
+  }
 
   console.log("foundObjects", foundObjects);
 
@@ -94,8 +106,11 @@ function App() {
       <Pagination
         objectsPerPage={objectsPerPage}
         numberOfResults={numberOfResults}
+        previousPage={previousPage}
+        nextPage={nextPage}
+        paginate={paginate}
       />
-      <ResultDisplay foundObjects={foundObjects} />
+      <ResultDisplay foundObjects={currentDisplayObjects} />
       <ScrollButton />
     </div>
   );

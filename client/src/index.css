@@ -164,3 +164,7 @@ h6 {
   padding: 0.2rem;
   max-width: 20vw;
 }
+
+.page-number {
+  cursor: pointer;
+}

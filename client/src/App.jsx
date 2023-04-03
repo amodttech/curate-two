@@ -4,21 +4,31 @@ import SearchBar from "./components/SearchBar";
 import ScrollButton from "./components/ScrollButton";
 import Header from "./components/Header";
 import StatusBar from "./components/StatusBar";
+import Pagination from "./components/Pagination";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [foundObjects, setFoundObjects] = useState([]);
   const [numberOfResults, setNumberOfResults] = useState(null);
-  const [currentlyDisplayed, setCurrentlyDisplayed] = useState(0, 49);
   const [searching, setSearching] = useState(false);
   const [searchStatus, setSearchStatus] = useState("Contacting the Museum...");
+
+  // For pagination:
+  const [displayObjects, setDisplayObjects] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [objectsPerPage, setObjectsPerPage] = useState(10);
+  const indexOfLastObject = currentPage * objectsPerPage;
+  const indexOfFirstObject = indexOfLastObject - objectsPerPage;
+  const currentDisplayObjects = displayObjects.slice(
+    indexOfFirstObject,
+    indexOfLastObject
+  );
+
   const METurl =
     "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=";
 
   async function getResults(e) {
     e.preventDefault();
-    // sets the first and last index for the current objects to be displayed
-    setCurrentlyDisplayed(0, 49);
     // turns on the searching indicator
     setSearching(true);
 
@@ -46,6 +56,10 @@ function App() {
       );
       // turns off the searching indicator
       setSearchStatus("Rendering Display...");
+
+      /////  Sends all objects to pagination logic
+      setDisplayObjects(artObjectArray);
+      //////
 
       // sets the array of objects to display
       setFoundObjects(artObjectArray.slice(0, 49));
@@ -76,6 +90,10 @@ function App() {
         searching={searching}
         numberOfResults={numberOfResults}
         searchStatus={searchStatus}
+      />
+      <Pagination
+        objectsPerPage={objectsPerPage}
+        numberOfResults={numberOfResults}
       />
       <ResultDisplay foundObjects={foundObjects} />
       <ScrollButton />

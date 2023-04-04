@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import ResultDisplay from "./components/ResultDisplay";
 import SearchBar from "./components/SearchBar";
 import ScrollButton from "./components/ScrollButton";
@@ -7,56 +7,73 @@ import StatusBar from "./components/StatusBar";
 import Pagination from "./components/Pagination";
 
 function App() {
+  //search State
   const [searchTerm, setSearchTerm] = useState("");
-  const [objectsToDisplay, setObjectsToDisplay] = useState([]);
-  const [numberOfResults, setNumberOfResults] = useState(null);
   const [searching, setSearching] = useState(false);
   const [searchStatus, setSearchStatus] = useState("Contacting the Museum...");
+  const [numberOfResults, setNumberOfResults] = useState(null);
+
+  //API Call State
+  const [allObjectIDs, setAllObjectIDs] = useState([]);
+  const [objectsToDisplay, setObjectsToDisplay] = useState([]);
+
+  //Pagination State
+  const [currentPage, setCurrentPage] = useState(1)
+  const [objectsPerPage, setObjectsPerPage] = useState(10)
+
+  // const indexOfLastObject = currentPage * objectsPerPage
+  // const indexOfFirstObject = indexOfLastObject - objectsPerPage
+  // const currentObjectIDs = allObjects.slice
 
   const METurl =
     "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=";
 
   async function getAllResults(e) {
     e.preventDefault();
-    // turns on the searching indicator
-    setSearching(true);
-
+    setSearching(true)
     try {
-      //first API call, returns json with total number of objects and array of object IDs
       const apiResponse = await fetch(`${METurl}${searchTerm}`);
-      const returnedIDs = await apiResponse.json();
-      setSearchStatus("Receiving Results...");
-
-      // destructure the object IDs from the response
-      const { objectIDs } = returnedIDs;
-
-      // destructure the total number value to useState
-      setSearchStatus("Building Response...");
-      setNumberOfResults(returnedIDs.total.toString());
-
-      // map objects to an array
-      const artObjectArray = await Promise.all(
-        objectIDs.map(async (id) => {
-          const response = await fetch(
-            `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
-          );
-          return await response.json();
-        })
-      );
-      // turns off the searching indicator
-      setSearchStatus("Rendering Display...");
-
-      // sets the array of objects to display
-      setObjectsToDisplay(artObjectArray.slice(0, 49));
-      setSearching(false);
+      const returnedPackage = await apiResponse.json();
+      setSearchStatus("Found relevant objects")
+      setAllObjectIDs(returnedPackage.objectIDs)
+      setNumberOfResults(returnedPackage.total)
+      setSearchStatus("Rendering results")
+      getFirstPage()
     } catch {
-      // turns off the searching indicator
-      setSearchStatus("Something Has Gone Horribly Wrong!  HELP!");
-      setSearching(false);
       console.log("bad response :/");
+      setSearchStatus('Sorry, there was an error.')
     }
   }
 
+  async function getFirstPage() {
+    const first50 = allObjectIDs.slice(0, 49)
+    console.log('first50', first50)
+    getObjectData(first50)
+  }
+
+  async function getObjectData(arrayOfIDs) {
+
+          // map objects to an array
+          const artObjectArray = await Promise.all(
+            arrayOfIDs.map(async (id) => {
+              const response = await fetch(
+                `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
+              );
+              return await response.json();
+            })
+          );
+          // turns off the searching indicator
+          setSearchStatus("Rendering Display...");
+
+          // sets the array of objects to display
+          setObjectsToDisplay(artObjectArray.slice(0, 49));
+          setSearching(false);
+
+  }
+
+  console.log('allObjectIDs', allObjectIDs)
+  console.log('objectsToDisplay', objectsToDisplay)
+  console.log('numberOfResults', numberOfResults)
 
   return (
     <div className="App">

@@ -104,9 +104,9 @@ const testObject = [
   },
 ];
 
-function ResultDisplay({ foundObjects }) {
+function ResultDisplay({ objectsForDisplay }) {
 
-  const objectList = foundObjects.map((artObject, index) => (
+  const objectList = objectsForDisplay.map((artObject, index) => (
     <ObjectCard element={index} artObject={artObject} />
   ));
 

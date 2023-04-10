@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ResultDisplay from "./components/ResultDisplay";
 import SearchBar from "./components/SearchBar";
 import ScrollButton from "./components/ScrollButton";
@@ -7,7 +7,7 @@ import StatusBar from "./components/StatusBar";
 import Pagination from "./components/Pagination";
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const searchTerm = useRef("")
   const [foundObjects, setFoundObjects] = useState([]);
   const [numberOfResults, setNumberOfResults] = useState(null);
   const [searching, setSearching] = useState(false);
@@ -19,11 +19,11 @@ function App() {
   const [objectsPerPage, setObjectsPerPage] = useState(25);
   const indexOfLastObject = currentPage * objectsPerPage;
   const indexOfFirstObject = indexOfLastObject - objectsPerPage;
-  const currentDisplayObjects = displayObjects.slice(
+  const objectsForDisplay = displayObjects.slice(
     indexOfFirstObject,
     indexOfLastObject
   );
-
+console.log('searchTerm', searchTerm.current.value)
   const METurl =
     "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=";
 
@@ -34,7 +34,7 @@ function App() {
 
     try {
       //first API call, returns json with total number of objects and array of object IDs
-      const apiResponse = await fetch(`${METurl}${searchTerm}`);
+      const apiResponse = await fetch(`${METurl}${searchTerm.current.value}`);
       const returnedIDs = await apiResponse.json();
       setSearchStatus("Receiving Results...");
 
@@ -84,7 +84,7 @@ function App() {
     );
     await setDisplayObjects(objectArray)
   }
-  
+
   function previousPage() {
     if (currentPage !== 1) {
       setCurrentPage(currentPage - 1);
@@ -108,7 +108,6 @@ function App() {
       <Header />
       <SearchBar
         searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
         getResults={getResults}
       />
       <StatusBar
@@ -124,7 +123,7 @@ function App() {
         nextPage={nextPage}
         paginate={paginate}
       />
-      <ResultDisplay foundObjects={currentDisplayObjects} />
+      <ResultDisplay objectsForDisplay={objectsForDisplay} />
       <ScrollButton />
     </div>
   );

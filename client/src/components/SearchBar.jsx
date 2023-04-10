@@ -1,6 +1,6 @@
 import React from "react";
 
-function SearchBar({ searchTerm, setSearchTerm, getResults }) {
+function SearchBar({ searchTerm, getResults }) {
   function handleKeypress(e) {
     if (e.keyCode === 13) {
       getResults(e);
@@ -15,10 +15,7 @@ function SearchBar({ searchTerm, setSearchTerm, getResults }) {
       <input
         className="search-input"
         type="text"
-        id="search-term"
-        name="search-term"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        ref={searchTerm}
         onKeyDown={(e)=>handleKeypress(e)}
       />
     </div>

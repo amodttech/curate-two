@@ -1,6 +1,7 @@
 import React from "react";
 
 function Pagination({
+  currentPage,
   objectsPerPage,
   numberOfResults,
   paginate,
@@ -26,9 +27,11 @@ function Pagination({
             {number}
           </li>
         ))}
-        <li onClick={nextPage} className="page-number">
-          Next
-        </li>
+        {(currentPage === pageNumbers.slice(-1)) ? null : (
+          <li className="page-number" onClick={nextPage}>
+            Next
+          </li>
+        )}
       </ul>
     </div>
   );

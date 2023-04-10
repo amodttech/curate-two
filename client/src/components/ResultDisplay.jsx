@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ObjectCard from "./ObjectCard";
 
 const testObject = [
@@ -105,14 +105,15 @@ const testObject = [
 ];
 
 function ResultDisplay({ foundObjects }) {
+
   const objectList = foundObjects.map((artObject, index) => (
     <ObjectCard element={index} artObject={artObject} />
   ));
-  return (
-    <div className="object-display">
-      {objectList}
-    </div>
-  );
+
+
+
+
+  return <div className="object-display">{objectList}</div>;
 }
 
 export default ResultDisplay;

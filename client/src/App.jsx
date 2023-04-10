@@ -6,7 +6,6 @@ import Header from "./components/Header";
 import StatusBar from "./components/StatusBar";
 import Pagination from "./components/Pagination";
 
-
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [foundObjects, setFoundObjects] = useState([]);
@@ -17,7 +16,7 @@ function App() {
   // For pagination:
   const [displayObjects, setDisplayObjects] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [objectsPerPage, setObjectsPerPage] = useState(10);
+  const [objectsPerPage, setObjectsPerPage] = useState(25);
   const indexOfLastObject = currentPage * objectsPerPage;
   const indexOfFirstObject = indexOfLastObject - objectsPerPage;
   const currentDisplayObjects = displayObjects.slice(
@@ -44,7 +43,7 @@ function App() {
 
       // destructure the total number value to useState
       setSearchStatus("Building Response...");
-      setNumberOfResults(returnedIDs.total.toString());
+      setNumberOfResults(returnedIDs.total);
 
       // map objects to an array
       const artObjectArray = await Promise.all(
@@ -73,6 +72,19 @@ function App() {
     }
   }
 
+
+  async function getObjectsfromID(idArray) {
+    const objectArray = await Promise.all(
+      idArray.map(async (id) => {
+        const response = await fetch(
+          `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
+        );
+        return await response.json();
+      })
+    );
+    await setDisplayObjects(objectArray)
+  }
+  
   function previousPage() {
     if (currentPage !== 1) {
       setCurrentPage(currentPage - 1);
@@ -85,8 +97,8 @@ function App() {
     }
   }
 
-  function paginate({selected}) {
-    setCurrentPage(selected + 1)
+  function paginate({ selected }) {
+    setCurrentPage(selected + 1);
   }
 
   console.log("foundObjects", foundObjects);
@@ -105,6 +117,7 @@ function App() {
         searchStatus={searchStatus}
       />
       <Pagination
+        currentPage={currentPage}
         objectsPerPage={objectsPerPage}
         numberOfResults={numberOfResults}
         previousPage={previousPage}

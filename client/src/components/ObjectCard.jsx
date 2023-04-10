@@ -11,7 +11,7 @@ function ObjectCard({ artObject, element }) {
           <img src={artObject.primaryImageSmall} alt={artObject.title} />
         </a>
       ) : (
-        <div className="no-image">no image</div>
+        <div className="no-image">not allowed to display image due to copyright restrictions</div>
       )}
 
       <h4 className="object-title">{artObject.title}</h4>

@@ -14,7 +14,7 @@ function App() {
 
   // // For pagination:
   const [displayObjects, setDisplayObjects] = useState([]);
-  console.log('displayObjects', displayObjects)
+  console.log("displayObjects", displayObjects);
   const [currentPage, setCurrentPage] = useState(1);
   const [objectsPerPage, setObjectsPerPage] = useState(25);
   const indexOfLastObject = currentPage * objectsPerPage;
@@ -35,7 +35,7 @@ function App() {
       numberOfResults.current = fullResponse.current.total;
       allIds.current = fullResponse.current.objectIDs;
 
-      getObjectsfromID(allIds.current.slice(0, 24));
+      getObjectsfromID(allIds.current.slice(0, objectsPerPage - 1));
 
       // setFoundObjects(artObjectArray.slice(0, 49));
       // setSearching(false);
@@ -53,7 +53,16 @@ function App() {
         return await response.json();
       })
     );
-    await setDisplayObjects(objectArray);
+    const imagedObjects = objectArray.filter(object => {
+      return object.primaryImageSmall
+    })
+
+    const noImage = objectArray.filter(object => {
+      return object.primaryImageSmall === ""
+    })
+    console.log('noImage', noImage)
+
+    await setDisplayObjects([...imagedObjects, ...noImage]);
   }
 
   // function previousPage() {

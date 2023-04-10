@@ -180,3 +180,13 @@ h6 {
   border: solid 1px black;
   flex-direction: row;
 }
+.page-number-active {
+  cursor: pointer;
+  margin: 0.5rem;
+  padding: 0.25rem;
+  border: solid 1px black;
+  flex-direction: row;
+  background-color: red;
+  color: white;
+}
+

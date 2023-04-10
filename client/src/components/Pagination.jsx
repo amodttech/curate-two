@@ -22,12 +22,14 @@ function Pagination({
           <li
             key={number}
             onClick={() => paginate(number)}
-            className="page-number"
+            className={
+              currentPage === number ? `page-number-active` : `page-number`
+            }
           >
             {number}
           </li>
         ))}
-        {(currentPage === pageNumbers.length) ? null : (
+        {currentPage === pageNumbers.length ? null : (
           <li className="page-number" onClick={nextPage}>
             Next
           </li>
@@ -38,6 +40,5 @@ function Pagination({
 }
 
 export default Pagination;
-
 
 //using: https://hygraph.com/blog/react-pagination

@@ -20,15 +20,12 @@ function App() {
 
   const indexOfLastObject = currentPage * objectsPerPage;
   const indexOfFirstObject = indexOfLastObject - objectsPerPage;
-  // const objectsForDisplay = displayObjects.slice(
-  //   indexOfFirstObject,
-  //   indexOfLastObject
-  // );
 
   const METurl =
     "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=";
 
   async function getAllResults() {
+    setCurrentPage(1)
     try {
       const apiResponse = await fetch(`${METurl}${searchTerm.current.value}`);
       fullResponse.current = await apiResponse.json();
@@ -103,6 +100,16 @@ function App() {
       ) : null}
 
       <ResultDisplay objectsForDisplay={displayObjects} />
+      {displayObjects.length ? (
+        <Pagination
+          currentPage={currentPage}
+          objectsPerPage={objectsPerPage}
+          numberOfResults={numberOfResults.current}
+          previousPage={previousPage}
+          nextPage={nextPage}
+          paginate={paginate}
+        />
+      ) : null}
       <ScrollButton />
     </div>
   );

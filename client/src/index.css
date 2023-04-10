@@ -164,9 +164,13 @@ h6 {
   padding: 0.2rem;
   max-width: 20vw;
 }
+.pagination-container {
+}
 .pagination {
   list-style: none;
-
+  max-width: fit-content;
+  display: flex;
+  margin: auto 0;
 }
 
 .page-number {
@@ -174,4 +178,5 @@ h6 {
   margin: 0.5rem;
   padding: 0.25rem;
   border: solid 1px black;
+  flex-direction: row;
 }

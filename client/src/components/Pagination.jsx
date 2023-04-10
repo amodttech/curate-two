@@ -27,7 +27,7 @@ function Pagination({
             {number}
           </li>
         ))}
-        {(currentPage === pageNumbers.slice(-1)) ? null : (
+        {(currentPage === pageNumbers.length) ? null : (
           <li className="page-number" onClick={nextPage}>
             Next
           </li>

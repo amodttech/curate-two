@@ -11,12 +11,13 @@ function App() {
   const fullResponse = useRef([]);
   const numberOfResults = useRef(0);
   const allIds = useRef([]);
+  const objectsPerPage = 20;
 
-  // // For pagination:
+  //useStates
   const [displayObjects, setDisplayObjects] = useState([]);
-  console.log("displayObjects", displayObjects);
   const [currentPage, setCurrentPage] = useState(1);
-  const [objectsPerPage, setObjectsPerPage] = useState(25);
+  console.log("currentPage", currentPage);
+
   const indexOfLastObject = currentPage * objectsPerPage;
   const indexOfFirstObject = indexOfLastObject - objectsPerPage;
   // const objectsForDisplay = displayObjects.slice(
@@ -31,14 +32,10 @@ function App() {
     try {
       const apiResponse = await fetch(`${METurl}${searchTerm.current.value}`);
       fullResponse.current = await apiResponse.json();
-      // setNumberOfResults(fullResponse.current.total)
       numberOfResults.current = fullResponse.current.total;
       allIds.current = fullResponse.current.objectIDs;
 
-      getObjectsfromID(allIds.current.slice(0, objectsPerPage - 1));
-
-      // setFoundObjects(artObjectArray.slice(0, 49));
-      // setSearching(false);
+      getObjectsfromID(allIds.current.slice(0, objectsPerPage));
     } catch {
       console.log("bad response :/");
     }
@@ -53,49 +50,58 @@ function App() {
         return await response.json();
       })
     );
-    const imagedObjects = objectArray.filter(object => {
-      return object.primaryImageSmall
-    })
-
-    const noImage = objectArray.filter(object => {
-      return object.primaryImageSmall === ""
-    })
-    console.log('noImage', noImage)
-
+    const imagedObjects = objectArray.filter((object) => {
+      return object.primaryImageSmall;
+    });
+    const noImage = objectArray.filter((object) => {
+      return object.primaryImageSmall === "";
+    });
     await setDisplayObjects([...imagedObjects, ...noImage]);
   }
 
-  // function previousPage() {
-  //   if (currentPage !== 1) {
-  //     setCurrentPage(currentPage - 1);
-  //   }
-  // }
+  function previousPage() {
+    console.log("clicked previous");
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+      getObjectsfromID(
+        allIds.current.slice(indexOfFirstObject, indexOfLastObject)
+      );
+    }
+  }
+  function nextPage() {
+    console.log("clicked next page");
+    if (currentPage !== Math.ceil(allIds.current.length / objectsPerPage)) {
+      setCurrentPage(currentPage + 1);
+      getObjectsfromID(
+        allIds.current.slice(indexOfFirstObject, indexOfLastObject)
+      );
+    }
+  }
 
-  // function nextPage() {
-  //   if (currentPage !== Math.ceil(displayObjects.length / objectsPerPage)) {
-  //     setCurrentPage(currentPage + 1);
-  //   }
-  // }
-
-  // function paginate({ selected }) {
-  //   setCurrentPage(selected + 1);
-  // }
-
-  // console.log("foundObjects", foundObjects);
+  function paginate(pageNumber) {
+    console.log(`clicked page number ${pageNumber}`);
+    setCurrentPage(pageNumber);
+    getObjectsfromID(
+      allIds.current.slice(indexOfFirstObject, indexOfLastObject)
+    );
+  }
 
   return (
     <div className="App">
       <Header />
       <SearchBar searchTerm={searchTerm} getAllResults={getAllResults} />
       <StatusBar numberOfResults={numberOfResults} />
-      {/* <Pagination
-        currentPage={currentPage}
-        objectsPerPage={objectsPerPage}
-        numberOfResults={numberOfResults}
-        previousPage={previousPage}
-        nextPage={nextPage}
-        paginate={paginate}
-      /> */}
+      {displayObjects.length ? (
+        <Pagination
+          currentPage={currentPage}
+          objectsPerPage={objectsPerPage}
+          numberOfResults={numberOfResults.current}
+          previousPage={previousPage}
+          nextPage={nextPage}
+          paginate={paginate}
+        />
+      ) : null}
+
       <ResultDisplay objectsForDisplay={displayObjects} />
       <ScrollButton />
     </div>

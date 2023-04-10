@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
+import uuid from 'react-uuid'
 import { Popover } from "react-tiny-popover";
 
-function ObjectCard({ artObject, element }) {
+function ObjectCard({ artObject}) {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   return (
-    <div key={element} className="object-card">
+    <li key={uuid()} className="object-card">
       {artObject.primaryImageSmall ? (
         <a href={artObject.primaryImage} target="_blank">
           <img src={artObject.primaryImageSmall} alt={artObject.title} />
@@ -58,7 +59,7 @@ function ObjectCard({ artObject, element }) {
           {artObject.objectID}
         </a>
       </div>
-    </div>
+    </li>
   );
 }
 

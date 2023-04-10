@@ -23,7 +23,7 @@ function App() {
 
   const indexOfLastObject = currentPage * objectsPerPage;
   const indexOfFirstObject = indexOfLastObject - objectsPerPage;
-  const currentObjectIDs = allObjectIDs.slice(
+  const idsToDisplay = allObjectIDs.slice(
     indexOfFirstObject,
     indexOfLastObject
   );
@@ -32,44 +32,14 @@ function App() {
     "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=";
 
   async function getAllResults(e) {
-    e.preventDefault();
-    setSearching(true);
     try {
       const apiResponse = await fetch(`${METurl}${searchTerm}`);
       const returnedPackage = await apiResponse.json();
-      setSearchStatus("Found relevant objects");
-      setAllObjectIDs(returnedPackage.objectIDs);
-      setNumberOfResults(returnedPackage.total);
-      setSearchStatus("Rendering results");
-      getFirstPage();
+      await setAllObjectIDs(returnedPackage.objectIDs);
+      await setNumberOfResults(returnedPackage.total);
     } catch {
       console.log("bad response :/");
-      setSearchStatus("Sorry, there was an error.");
     }
-  }
-
-  async function getFirstPage() {
-    const first50 = allObjectIDs.slice(0, 49);
-    console.log("first50", first50);
-    getObjectData(first50);
-  }
-
-  async function getObjectData(arrayOfIDs) {
-    // map objects to an array
-    const artObjectArray = await Promise.all(
-      arrayOfIDs.map(async (id) => {
-        const response = await fetch(
-          `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
-        );
-        return await response.json();
-      })
-    );
-    // turns off the searching indicator
-    setSearchStatus("Rendering Display...");
-
-    // sets the array of objects to display
-    await setObjectsToDisplay(artObjectArray.slice(0, 49));
-    setSearching(false);
   }
 
   function paginate(pageNumber) {
@@ -88,8 +58,7 @@ function App() {
     }
   }
 
-  console.log("objectsToDisplay", objectsToDisplay);
-  console.log('currentPage', currentPage)
+  console.log("currentPage", currentPage);
 
   return (
     <div className="App">
@@ -114,7 +83,7 @@ function App() {
           previousPage={previousPage}
         />
       ) : null}
-      <ResultDisplay objectsToDisplay={objectsToDisplay} />
+      <ResultDisplay idsToDisplay={idsToDisplay} />
       <ScrollButton />
     </div>
   );

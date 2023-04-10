@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ObjectCard from "./ObjectCard";
 
 const testObject = [
@@ -104,13 +104,32 @@ const testObject = [
   },
 ];
 
-function ResultDisplay({ objectsToDisplay }) {
+function ResultDisplay({ idsToDisplay }) {
+  const [objectsToDisplay, setObjectsToDisplay] = useState([]);
+
+  useEffect(()=> {
+    getObjectData(idsToDisplay)
+  }, [])
+
+  async function getObjectData(idArray) {
+    const artObjectArray = await Promise.all(
+      idArray.map(async (id) => {
+        const response = await fetch(
+          `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
+        );
+        return await response.json();
+      })
+    );
+    setObjectsToDisplay(artObjectArray)
+  }
+  console.log("objectsToDisplay", objectsToDisplay);
+
   const objectList = objectsToDisplay.map((artObject) => (
-    <ObjectCard element={artObject.id} artObject={artObject} />
+    <ObjectCard artObject={artObject} />
   ));
   return (
     <div className="object-display">
-      {objectList}
+      <ul className="object-display">{objectList}</ul>
     </div>
   );
 }

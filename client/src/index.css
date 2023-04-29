@@ -186,7 +186,7 @@ h6 {
   padding: 0.25rem;
   border: solid 1px black;
   flex-direction: row;
-  background-color: red;
+  background-color: rgb(62, 62, 62);
   color: white;
 }
 

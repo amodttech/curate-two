@@ -126,10 +126,10 @@ export default function App() {
   }, [query, hasImages, departmentId, dateBegin, dateEnd, mediumFilter, nationalityFilter]);
 
   useEffect(() => {
-    if (!allIds.length || currentPage === 1) return;
-    fetchPage(allIds, currentPage, mediumFilter, nationalityFilter);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage]);
+  if (!allIds.length || currentPage === 1) return;
+  fetchPage(allIds, currentPage, mediumFilter, nationalityFilter);
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [currentPage, allIds]);
 
   function handleSearch(newQuery) {
     const next = new URLSearchParams(searchParams);

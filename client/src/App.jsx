@@ -71,9 +71,15 @@ export default function App() {
     const end = start + OBJECTS_PER_PAGE * 3;
     const slice = ids.slice(start, Math.min(end, ids.length));
     try {
-      const objects = await Promise.all(
-        slice.map((id) => fetch(`${MET_OBJECT_URL}/${id}`).then((r) => r.json()))
-      );
+      const results = [];
+      for (let i = 0; i < slice.length; i += 5) {
+        const batch = slice.slice(i, i + 5);
+        const batchResults = await Promise.all(
+          batch.map((id) => fetch(`${MET_OBJECT_URL}/${id}`).then((r) => r.json()))
+        );
+        results.push(...batchResults);
+      }
+      const objects = results;
       let filtered = objects;
       if (medium) filtered = filtered.filter((o) => o.medium?.toLowerCase().includes(medium.toLowerCase()));
       if (nationality) filtered = filtered.filter((o) => o.artistNationality?.toLowerCase().includes(nationality.toLowerCase()));
@@ -99,6 +105,7 @@ export default function App() {
       if (!data.objectIDs || data.objectIDs.length === 0) {
         setAllIds([]);
         setDisplayObjects([]);
+        setAllIds([]);
         setLoading(false);
         setError("No results found. Try a different search term or adjust your filters.");
         return;

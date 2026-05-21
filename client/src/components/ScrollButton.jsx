@@ -1,41 +1,26 @@
-import React, { useState } from "react";
-import { FaArrowCircleUp } from "react-icons/fa";
+import { useState, useEffect } from "react";
 
-const ScrollButton = () => {
+export default function ScrollButton() {
   const [visible, setVisible] = useState(false);
 
-  const toggleVisible = () => {
-    const scrolled = document.documentElement.scrollTop;
-    if (scrolled > 300) {
-      setVisible(true);
-    } else if (scrolled <= 300) {
-      setVisible(false);
+  useEffect(() => {
+    function handleScroll() {
+      setVisible(document.documentElement.scrollTop > 300);
     }
-  };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-      /* you can also use 'auto' behaviour
-		in place of 'smooth' */
-    });
-  };
-
-  window.addEventListener("scroll", toggleVisible);
+  if (!visible) return null;
 
   return (
-    <div>
-      {visible ? (
-        <button>
-          <FaArrowCircleUp
-            onClick={scrollToTop}
-            style={{ display: visible ? "inline" : "none" }}
-          />
-        </button>
-      ) : null}
-    </div>
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      className="fixed bottom-6 right-6 w-10 h-10 bg-[#c8a96e] text-[#1a1816] flex items-center
+                 justify-center hover:bg-[#d4b87a] transition-colors shadow-lg text-lg"
+      aria-label="Scroll to top"
+    >
+      ↑
+    </button>
   );
-};
-
-export default ScrollButton;
+}

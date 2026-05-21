@@ -68,7 +68,7 @@ export default function App() {
     setLoading(true);
     setError(null);
     const start = (page - 1) * OBJECTS_PER_PAGE;
-    const end = start + OBJECTS_PER_PAGE * 3;
+    const end = start + OBJECTS_PER_PAGE;
     const slice = ids.slice(start, Math.min(end, ids.length));
     try {
       const results = [];
